@@ -11,21 +11,21 @@ rules:
     branches:
       - molecular_function
     match: "(.*) activity"
-    match_scope: '*'
+    match_scope: "*"
     replacement: "$1"
   - type: NewSynonym
     branches:
       - molecular_function
     match: "(.*) activity"
-    match_scope: '*'
+    match_scope: "*"
     replacement: "$1 enzyme"
     replacement_scope: related
   - type: NewSynonym
     branches:
       - biological_process
     match: "(.*) ([metabol|catabol|biosynthet])ic process"
-    match_scope: '*'
-    replacement: "$1 $2is"
+    match_scope: "*"
+    replacement: "$1 $2ic"
     replacement_scope: exact
     tests:
       - input: lipid biosynthetic process
@@ -33,7 +33,7 @@ rules:
         ontology: GO
   - type: NewSynonym
     match: "(.*) process"
-    match_scope: '*'
+    match_scope: "*"
     replacement: "$1"
     replacement_scope: related
     tests:
@@ -44,21 +44,21 @@ rules:
     branches:
       - biological_process
     match: "(.*) biosynthetic process"
-    match_scope: '*'
+    match_scope: "*"
     replacement: "$1 production"
     replacement_scope: exact
   - type: NewSynonym
     branches:
       - biological_process
     match: "(.*) biosynthetic process"
-    match_scope: '*'
+    match_scope: "*"
     replacement: "$1 synthesis"
     replacement_scope: exact
   - type: NewSynonym
     branches:
       - molecular_function
     match: "(.*) ([metabol|catabol|biosynthet])ic process"
-    match_scope: '*'
+    match_scope: "*"
     replacement: "$1ism"
     replacement_scope: exact
   - type: NewSynonym
