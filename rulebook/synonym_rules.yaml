@@ -25,7 +25,7 @@ rules:
       - biological_process
     match: "(.*) ([metabol|catabol|biosynthet])ic process"
     match_scope: "*"
-    replacement: "$1 $2ism"
+    replacement: "$1 $2is"
     replacement_scope: exact
     tests:
       - input: lipid biosynthetic process
