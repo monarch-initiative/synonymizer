@@ -57,9 +57,16 @@ rules:
   - type: NewSynonym
     branches:
       - molecular_function
-    match: "(.*)(metabol|catabol|biosynthet)ic process"
+    match: "(.*)(metabol|catabol)ic process"
     match_scope: "*"
     replacement: "\\1ism"
+    replacement_scope: exact
+  - type: NewSynonym
+    branches:
+      - molecular_function
+    match: "(.*)(biosynthe)tic process"
+    match_scope: "*"
+    replacement: "\\1sis"
     replacement_scope: exact
   - type: NewSynonym
     branches:
