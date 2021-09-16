@@ -173,7 +173,7 @@ def main():
                         os.path.join(data_folder, new_terms_filename),
                         sep="\t",
                         index=None,
-                        columns=None,
+                        header=None,
                     )
 
                 else:
