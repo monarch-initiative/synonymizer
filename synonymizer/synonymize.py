@@ -30,7 +30,6 @@ def main():
                 "preferred_term",
                 "category",
             ]
-            new_terms_df = pd.DataFrame(columns=terms_cols)
 
             for key, value in rule_book["prefixes"].items():
                 # key = key.replace("_", " ")
@@ -49,6 +48,14 @@ def main():
             rules_df.fillna("", inplace=True)
             rules_exp_branch_df = rules_df.explode("branches")
 
+            # DEBUG BLOCK *****************************************
+            # rules_exp_branch_df.to_csv(
+            #     os.path.join(data_folder, "rules.tsv"),
+            #     sep="\t",
+            #     index=None,
+            # )
+            # *****************************************************
+
             ontologies = list(
                 set([x[0] for x in prefix_df["id"].str.split(":")])
             )
@@ -56,6 +63,8 @@ def main():
 
             for ont in ontologies:
                 terms_filename = ont.lower() + "_termlist.tsv"
+                new_terms_filename = ont.lower() + "_syn_termlist.tsv"
+                new_terms_df = pd.DataFrame(columns=terms_cols)
 
                 if os.path.isfile(os.path.join(data_folder, terms_filename)):
                     print(
@@ -87,21 +96,31 @@ def main():
                         right=terms_sub,
                         right_on="text",
                     )
-                    match_df = relevant_rules_df["match"].drop_duplicates()
+                    match_replacement_df = relevant_rules_df[
+                        ["match", "replacement"]
+                    ].drop_duplicates()
 
-                    relevant_rules_df.to_csv(
-                        os.path.join(data_folder, "rules.tsv"),
-                        sep="\t",
-                        index=None,
-                    )
+                    # DEBUG BLOCK *****************************************
+                    # match_replacement_df.to_csv(
+                    #     os.path.join(
+                    #         data_folder, ont + "_match_replacement.tsv"
+                    #     ),
+                    #     sep="\t",
+                    #     index=None,
+                    # )
 
-                    for row in match_df.iteritems():
+                    # relevant_rules_df.to_csv(
+                    #     os.path.join(data_folder, ont + "_rules.tsv"),
+                    #     sep="\t",
+                    #     index=None,
+                    # )
+                    # **************************************************
+
+                    for row in match_replacement_df.iterrows():
                         need_syn_df = terms_df[
-                            terms_df.match_term.str.match(row[1] + "$")
-                            # terms_df.match_term.str.match(
-                            #     ".*(biome|ecosystem)$"
-                            # )
-                            # re.match(row[1] + "$", terms_df.match_term)
+                            terms_df.match_term.str.match(
+                                row[1]["match"] + "$"
+                            )
                         ]
                         need_syn_df = need_syn_df[
                             ~need_syn_df["preferred_term"].str.contains(
@@ -109,40 +128,63 @@ def main():
                             )
                         ]
 
-                        replacement_df = relevant_rules_df[
-                            relevant_rules_df["match"] == row[1]
-                        ]["replacement"]
-
-                        need_syn_df.to_csv(
-                            os.path.join(data_folder, "needSyns.tsv"),
-                            sep="\t",
-                            index=None,
-                        )
+                        # DEBUG BLOCK *****************************************
+                        # need_syn_df.to_csv(
+                        #     os.path.join(data_folder, ont + "_needSyns.tsv"),
+                        #     sep="\t",
+                        #     index=None,
+                        # )
+                        # *****************************************************
 
                         for syn_row in need_syn_df.iterrows():
-                            for rule in replacement_df.iteritems():
-                                syn_row_df = (
-                                    syn_row[1]
-                                    .to_frame()
-                                    .T.reset_index()
-                                    .drop(["index"], axis=1)
-                                )
+                            syn_row_df = (
+                                syn_row[1]
+                                .to_frame()
+                                .T.reset_index()
+                                .drop(["index"], axis=1)
+                            )
 
-                                term_to_replace = row[1]
-                                replacement_term = rule[1]
+                            term_to_replace = row[1]["match"] + "$"
+                            replacement_term = row[1]["replacement"]
 
-                                syn_row_df["match_term"] = syn_row_df[
-                                    "match_term"
-                                ].replace(
-                                    term_to_replace,
-                                    replacement_term,
-                                    regex=True,
-                                )
+                            syn_row_df["match_term"] = syn_row_df[
+                                "match_term"
+                            ].replace(
+                                term_to_replace,
+                                replacement_term,
+                                regex=True,
+                            )
 
-                                import pdb
+                            syn_row_df["preferred_term"] = (
+                                syn_row_df["match_term"]
+                                + "[SYNONYM_OF:"
+                                + syn_row_df["preferred_term"]
+                                + "]"
+                            )
 
-                                pd.set_option("display.max_colwidth", None)
-                                pdb.set_trace()
+                            new_terms_df = pd.concat(
+                                [new_terms_df, syn_row_df]
+                            )
+
+                    new_terms_df = new_terms_df.drop_duplicates()
+
+                    # DEBUG BLOCK *****************************************
+                    # new_terms_df.to_csv(
+                    #     os.path.join(data_folder, "new_" + terms_filename),
+                    #     sep="\t",
+                    #     index=None,
+                    # )
+                    # *****************************************************
+
+                    # Concat with original termlist to form a new one
+                    new_terms_df = pd.concat([terms_df, new_terms_df])
+
+                    new_terms_df.to_csv(
+                        os.path.join(data_folder, new_terms_filename),
+                        sep="\t",
+                        index=None,
+                        columns=None,
+                    )
 
                 else:
                     raise (
@@ -151,10 +193,6 @@ def main():
                             f"{ont} in the data folder {data_folder}"
                         )
                     )
-
-            import pdb
-
-            pdb.set_trace()
 
         except yaml.YAMLError as exec:
             print(exec)

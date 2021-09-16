@@ -23,9 +23,20 @@ rules:
   - type: NewSynonym
     branches:
       - biological_process
-    match: "(.*)(metabol|catabol|biosynthet)ic process"
+    match: "(.*)(metabol|catabol)ic process"
     match_scope: "*"
-    replacement: "\\1\\2is"
+    replacement: "\\1 \\2ism"
+    replacement_scope: exact
+    tests:
+      - input: lipid catabolic process
+        output: lipid catabolism
+        ontology: GO
+  - type: NewSynonym
+    branches:
+      - biological_process
+    match: "(.*)(biosynthe)tic process"
+    match_scope: "*"
+    replacement: "\\1 \\2sis"
     replacement_scope: exact
     tests:
       - input: lipid biosynthetic process
@@ -59,14 +70,14 @@ rules:
       - molecular_function
     match: "(.*)(metabol|catabol)ic process"
     match_scope: "*"
-    replacement: "\\1ism"
+    replacement: "\\1 \\2ism"
     replacement_scope: exact
   - type: NewSynonym
     branches:
       - molecular_function
     match: "(.*)(biosynthe)tic process"
     match_scope: "*"
-    replacement: "\\1sis"
+    replacement: "\\1 \\2sis"
     replacement_scope: exact
   - type: NewSynonym
     branches:
@@ -104,7 +115,7 @@ rules:
     branches:
       - environmental_material
       - environmental_system
-    match: "(.*)"
+    match: "(^.*)"
     match_scope: label|exact
-    replacement: "\\1sample"
+    replacement: "\\1 sample"
     replacement_scope: related
