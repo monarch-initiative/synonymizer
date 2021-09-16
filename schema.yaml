@@ -1,0 +1,99 @@
+id: https://w3id.org/sssom/synonymizer
+name: synonymizer
+description: synonymizer
+imports:
+- linkml:types
+prefixes:
+  linkml: https://w3id.org/linkml/
+  synonymizer: https://w3id.org/sssom/synonymizer/
+default_prefix: synonymizer
+types: {}
+classes:
+  Rule:
+    slots:
+    - type
+    - description
+    - see_also
+    - branches
+    - match
+    - replacement
+    - replacement_scope
+    - tests
+    - comments
+    - match_scope
+    slot_usage: {}
+  Test:
+    slots:
+    - input
+    - output
+    - ontology
+    slot_usage: {}
+  Container:
+    slots:
+    - description
+    - rules
+    slot_usage: {}
+slots:
+  type:
+    range: string
+    examples:
+    - value: NewSynonym
+  description:
+    range: string
+    examples:
+    - value: adding X as synonym for X-activity in GO
+  see_also:
+    range: string
+    examples:
+    - value:
+      - https://github.com/geneontology/go-ontology/issues/21978
+  branches:
+    range: string
+    examples:
+    - value:
+      - environmental_material
+      - environmental_system
+    multivalued: true
+  match:
+    range: string
+    examples:
+    - value: (.*)
+    multivalued: true
+  replacement:
+    range: string
+    examples:
+    - value: $1 sample
+  replacement_scope:
+    range: string
+    examples:
+    - value: related
+  tests:
+    range: Test
+  comments:
+    range: string
+    examples:
+    - value:
+      - not strictly a synonym but useful to have until we have an ontology of stresses/exposure
+  match_scope:
+    range: string
+    examples:
+    - value:
+      - label
+      - exact
+    multivalued: true
+  input:
+    range: string
+    examples:
+    - value: carbon sequestration process
+  output:
+    range: string
+    examples:
+    - value: carbon sequestration
+  ontology:
+    range: string
+    examples:
+    - value: ENVO
+  rules:
+    range: Rule
+    multivalued: true
+enums: {}
