@@ -1,9 +1,6 @@
-from types import resolve_bases
-from numpy import true_divide
 import pandas as pd
 import yaml
 import os
-import re
 
 pwd = os.getcwd()
 synonym_rules = os.path.join(pwd, "rulebook/synonym_rules.yaml")
@@ -76,13 +73,6 @@ def main():
                     terms_df = pd.read_csv(
                         terms, sep="\t", low_memory=False, names=terms_cols
                     )
-
-                    # ENVO has spaces in its terms
-                    # GO has underscores in its terms
-                    # if ont == "ENVO":
-                    #     prefix_df["text"] = prefix_df["text"].str.replace(
-                    #         "_", " "
-                    #     )
 
                     pref_sub = prefix_df[prefix_df["id"].str.startswith(ont)]
                     terms_sub = pd.merge(
