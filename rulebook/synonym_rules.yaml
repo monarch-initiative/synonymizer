@@ -12,20 +12,20 @@ rules:
       - molecular_function
     match: ".*(activity)"
     match_scope: "*"
-    replacement: "\1"
+    replacement: "\\1"
   - type: NewSynonym
     branches:
       - molecular_function
     match: ".*(activity)"
     match_scope: "*"
-    replacement: "\1 enzyme"
+    replacement: "\\1 enzyme"
     replacement_scope: related
   - type: NewSynonym
     branches:
       - biological_process
     match: ".*(metabol|catabol|biosynthet)ic process"
     match_scope: "*"
-    replacement: "\1 \2is"
+    replacement: "\\1 \\2is"
     replacement_scope: exact
     tests:
       - input: lipid biosynthetic process
@@ -34,7 +34,7 @@ rules:
   - type: NewSynonym
     match: ".*(process)"
     match_scope: "*"
-    replacement: "\1"
+    replacement: "\\1"
     replacement_scope: related
     tests:
       - input: carbon sequestration process
@@ -45,21 +45,21 @@ rules:
       - biological_process
     match: ".*(biosynthetic process)"
     match_scope: "*"
-    replacement: "\1 production"
+    replacement: "\\1 production"
     replacement_scope: exact
   - type: NewSynonym
     branches:
       - biological_process
     match: ".*(biosynthetic process)"
     match_scope: "*"
-    replacement: "\1 synthesis"
+    replacement: "\\1 synthesis"
     replacement_scope: exact
   - type: NewSynonym
     branches:
       - molecular_function
     match: ".*(metabol|catabol|biosynthet)ic process"
     match_scope: "*"
-    replacement: "\1ism"
+    replacement: "\\1ism"
     replacement_scope: exact
   - type: NewSynonym
     branches:
@@ -67,7 +67,7 @@ rules:
       - environmental_system
     match: ".*(ecosystem|biome)"
     match_scope: label|exact
-    replacement: "\1 community"
+    replacement: "\\1 community"
     replacement_scope: exact
   - type: NewSynonym
     branches:
@@ -75,7 +75,7 @@ rules:
       - environmental_system
     match: ".*(ecosystem|biome)"
     match_scope: label|exact
-    replacement: "\1 microbial community"
+    replacement: "\\1 microbial community"
     replacement_scope: exact
   - type: NewSynonym
     branches:
@@ -83,7 +83,7 @@ rules:
       - environmental_system
     match: ".*(ecosystem|biome)"
     match_scope: label|exact
-    replacement: "\1 system"
+    replacement: "\\1 system"
     replacement_scope: exact
   - type: NewSynonym
     branches:
@@ -91,7 +91,7 @@ rules:
       - environmental_system
     match: ".*(ecosystem|biome)"
     match_scope: label|exact
-    replacement: "\1 microbiome"
+    replacement: "\\1 microbiome"
     replacement_scope: exact
   - type: NewSynonym
     branches:
@@ -99,5 +99,5 @@ rules:
       - environmental_system
     match: ".*"
     match_scope: label|exact
-    replacement: "\1 sample"
+    replacement: "\\1 sample"
     replacement_scope: related
