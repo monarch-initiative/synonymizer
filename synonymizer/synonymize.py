@@ -1,20 +1,31 @@
 import pandas as pd
 import yaml
 import os
-
-pwd = os.getcwd()
-synonym_rules = os.path.join(pwd, "rulebook/synonym_rules.yaml")
-data_folder = os.path.join(pwd, "data/")
-syn_schema = os.path.join(pwd, "schema.yaml")
+from . import DATA_FOLDER, SCHEMA, SYNONYM_RULES
 
 
-def main():
-    with open(synonym_rules, "r") as rules, open(
-        syn_schema, "r"
-    ) as schema_file:
+def run(
+    rule_file: str = SYNONYM_RULES,
+    schema_file: str = SCHEMA,
+    data_folder: str = DATA_FOLDER,
+):
+    """Add rules to capture more terms as synonyms during named entity
+    recognition (NER)
+
+    :param rule_file: YAML file that contains the rules.,
+                      defaults to SYNONYM_RULES
+    :type rule_file: str
+    :param schema_file: YAML file that provides schema., defaults to SCHEMA
+    :type schema_file: str
+    :param data_folder: Data folder where the input termlists are located and
+                        the ouput files are saved.,
+                        defaults to DATA_FOLDER
+    :type data_folder: str
+    """
+    with open(rule_file, "r") as rules, open(schema_file, "r") as sf:
         try:
             rule_book = yaml.safe_load(rules)
-            schema = yaml.safe_load(schema_file)
+            schema = yaml.safe_load(sf)
             prefix_cols = ["id", "text"]
             rules_cols = schema["classes"]["Rule"]["slots"]
             prefix_df = pd.DataFrame(columns=prefix_cols)
@@ -29,7 +40,6 @@ def main():
             ]
 
             for key, value in rule_book["prefixes"].items():
-                # key = key.replace("_", " ")
                 row = pd.DataFrame([[value, key]], columns=prefix_cols)
                 prefix_df = pd.concat([prefix_df, row])
 
@@ -189,4 +199,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    run()
