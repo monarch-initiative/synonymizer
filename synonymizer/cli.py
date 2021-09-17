@@ -1,8 +1,7 @@
 import click
 import logging
-from . import synonymize
 from typing import TextIO
-from . import DATA_FOLDER, SCHEMA, SYNONYM_RULES
+from . import DATA_FOLDER, SCHEMA, SYNONYM_RULES, synonymize
 
 rule_option = click.option(
     "-r",
