@@ -1,0 +1,1 @@
+Place all termlist files (tsv format) in this folder.
