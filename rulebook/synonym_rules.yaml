@@ -34,16 +34,27 @@ rules:
   - type: NewSynonym
     branches:
       - biological_process
-    match: "(.*)(biosynthe)tic process"
+    match: "(.*)biosynthetic process"
     match_scope: "*"
-    replacement: "\\1 \\2sis"
+    replacement: "\\1 biosynthesis"
     replacement_scope: exact
     tests:
       - input: lipid biosynthetic process
         output: lipid biosynthesis
         ontology: GO
   - type: NewSynonym
-    match: "(.*)(process)"
+    branches:
+      - biological_process
+    match: "(.*)biosynthetic process"
+    match_scope: "*"
+    replacement: "\\1 biosynthesis pathway"
+    replacement_scope: exact
+    tests:
+      - input: lipid biosynthetic process
+        output: lipid biosynthesis pathway
+        ontology: GO
+  - type: NewSynonym
+    match: "(.*) process"
     match_scope: "*"
     replacement: "\\1"
     replacement_scope: related
@@ -118,4 +129,11 @@ rules:
     match: "(^.*)"
     match_scope: label|exact
     replacement: "\\1 sample"
+    replacement_scope: related
+  - type: NewSynonym
+    branches:
+      - environmental_material
+      - environmental_system
+    match: "(.*)(environment|biome)"
+    replacement: "\\1ecosystem"
     replacement_scope: related
