@@ -122,11 +122,13 @@ def run(
                                 row[1]["match"] + "$"
                             )
                         ]
-                        need_syn_df = need_syn_df[
-                            ~need_syn_df["preferred_term"].str.contains(
-                                "SYNONYM_OF:"
-                            )
-                        ]
+
+                        # This removes all synonyms which are important
+                        # need_syn_df = need_syn_df[
+                        #     ~need_syn_df["preferred_term"].str.contains(
+                        #         "SYNONYM_OF:"
+                        #     )
+                        # ]
 
                         # DEBUG BLOCK *****************************************
                         # need_syn_df.to_csv(
