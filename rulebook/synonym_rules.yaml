@@ -54,7 +54,7 @@ rules:
         output: lipid biosynthesis pathway
         ontology: GO
   - type: NewSynonym
-    match: "(.*)(process)"
+    match: "(.*) process"
     match_scope: "*"
     replacement: "\\1"
     replacement_scope: related
