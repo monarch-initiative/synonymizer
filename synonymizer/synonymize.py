@@ -96,9 +96,15 @@ def run(
                         right=terms_sub,
                         right_on="text",
                     )
+
                     match_replacement_df = relevant_rules_df[
                         ["match", "replacement"]
                     ].drop_duplicates()
+                    match_replacement_df = match_replacement_df.append(
+                        rules_exp_branch_df[
+                            rules_exp_branch_df["branches"] == ""
+                        ][["match", "replacement"]]
+                    )
 
                     # DEBUG BLOCK *****************************************
                     # match_replacement_df.to_csv(
@@ -114,7 +120,11 @@ def run(
                     #     sep="\t",
                     #     index=None,
                     # )
-                    # **************************************************
+
+                    # import pdb
+
+                    # pdb.set_trace()
+                    # # **************************************************
 
                     for row in match_replacement_df.iterrows():
                         need_syn_df = terms_df[
