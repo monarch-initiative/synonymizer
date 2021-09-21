@@ -183,8 +183,6 @@ def run(
                                 [new_terms_df, syn_row_df]
                             )
 
-                    new_terms_df = new_terms_df.drop_duplicates()
-
                     # DEBUG BLOCK *****************************************
                     # new_terms_df.to_csv(
                     #     os.path.join(data_folder, "new_" + terms_filename),
@@ -195,6 +193,8 @@ def run(
 
                     # Concat with original termlist to form a new one
                     new_terms_df = pd.concat([terms_df, new_terms_df])
+
+                    new_terms_df = new_terms_df.drop_duplicates()
 
                     new_terms_df.to_csv(
                         os.path.join(data_folder, new_terms_filename),
