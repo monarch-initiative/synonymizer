@@ -100,6 +100,8 @@ def run(
                     match_replacement_df = relevant_rules_df[
                         ["match", "replacement"]
                     ].drop_duplicates()
+
+                    # add rules without 'branches'
                     match_replacement_df = match_replacement_df.append(
                         rules_exp_branch_df[
                             rules_exp_branch_df["branches"] == ""
