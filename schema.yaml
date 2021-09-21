@@ -35,6 +35,7 @@ classes:
     slot_usage: {}
 slots:
   type:
+    required: true
     range: string
     examples:
     - value: NewSynonym
@@ -55,15 +56,18 @@ slots:
       - environmental_system
     multivalued: true
   match:
+    required: true
     range: string
     examples:
     - value: (.*)
     multivalued: true
   replacement:
+    required: true
     range: string
     examples:
     - value: $1 sample
   replacement_scope:
+    required: true
     range: string
     examples:
     - value: related
