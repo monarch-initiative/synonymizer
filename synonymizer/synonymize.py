@@ -1,4 +1,3 @@
-from numpy import mat
 import pandas as pd
 import yaml
 import os
@@ -172,12 +171,15 @@ def run(
                                 regex=True,
                             )
 
-                            syn_row_df["preferred_term"] = (
-                                syn_row_df["match_term"]
-                                + "[SYNONYM_OF:"
-                                + syn_row_df["preferred_term"]
-                                + "]"
-                            )
+                            if not syn_row_df["preferred_term"].str.contains(
+                                "SYNONYM_OF:"
+                            )[0]:
+                                syn_row_df["preferred_term"] = (
+                                    syn_row_df["match_term"]
+                                    + "[SYNONYM_OF:"
+                                    + syn_row_df["preferred_term"]
+                                    + "]"
+                                )
 
                             new_terms_df = pd.concat(
                                 [new_terms_df, syn_row_df]
