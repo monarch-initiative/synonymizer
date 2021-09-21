@@ -1,3 +1,4 @@
+from numpy import mat
 import pandas as pd
 import yaml
 import os
@@ -99,7 +100,7 @@ def run(
 
                     match_replacement_df = relevant_rules_df[
                         ["match", "replacement"]
-                    ].drop_duplicates()
+                    ]
 
                     # add rules without 'branches'
                     match_replacement_df = match_replacement_df.append(
@@ -107,6 +108,8 @@ def run(
                             rules_exp_branch_df["branches"] == ""
                         ][["match", "replacement"]]
                     )
+
+                    match_replacement_df.drop_duplicates(inplace=True)
 
                     # DEBUG BLOCK *****************************************
                     # match_replacement_df.to_csv(
