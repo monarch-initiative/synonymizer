@@ -13,6 +13,10 @@ rules:
     match: "(.*)(activity)"
     match_scope: "*"
     replacement: "\\1"
+    tests:
+      - input: "ChS ABC lyase activity"
+        output: "ChS ABC lyase"
+        ontology: GO
   - type: NewSynonym
     branches:
       - molecular_function
@@ -20,12 +24,16 @@ rules:
     match_scope: "*"
     replacement: "\\1enzyme"
     replacement_scope: related
+    tests:
+      - input: "small protein conjugating activity"
+        output: "small protein conjugating enzyme"
+        ontology: GO
   - type: NewSynonym
     branches:
       - biological_process
     match: "(.*)(metabol|catabol)ic process"
     match_scope: "*"
-    replacement: "\\1 \\2ism"
+    replacement: "\\1\\2ism"
     replacement_scope: exact
     tests:
       - input: lipid catabolic process
@@ -36,7 +44,7 @@ rules:
       - biological_process
     match: "(.*)biosynthetic process"
     match_scope: "*"
-    replacement: "\\1 biosynthesis"
+    replacement: "\\1biosynthesis"
     replacement_scope: exact
     tests:
       - input: lipid biosynthetic process
@@ -47,7 +55,7 @@ rules:
       - biological_process
     match: "(.*)biosynthetic process"
     match_scope: "*"
-    replacement: "\\1 biosynthesis pathway"
+    replacement: "\\1biosynthesis pathway"
     replacement_scope: exact
     tests:
       - input: lipid biosynthetic process
@@ -69,6 +77,10 @@ rules:
     match_scope: "*"
     replacement: "\\1production"
     replacement_scope: exact
+    tests:
+      - input: "hydrogen biosynthetic process"
+        output: "hydrogen production"
+        ontology: GO
   - type: NewSynonym
     branches:
       - biological_process
@@ -76,20 +88,32 @@ rules:
     match_scope: "*"
     replacement: "\\1synthesis"
     replacement_scope: exact
+    tests:
+      - input: "regulation of acetylcholine biosynthetic process"
+        output: "regulation of acetylcholine synthesis"
+        ontology: GO
   - type: NewSynonym
     branches:
       - molecular_function
     match: "(.*)(metabol|catabol)ic process"
     match_scope: "*"
-    replacement: "\\1 \\2ism"
+    replacement: "\\1\\2ism"
     replacement_scope: exact
+    tests:
+      - input: "elastin metabolic process"
+        output: "elastin metabolism"
+        ontology: GO
   - type: NewSynonym
     branches:
       - molecular_function
     match: "(.*)(biosynthe)tic process"
     match_scope: "*"
-    replacement: "\\1 \\2sis"
+    replacement: "\\1\\2sis"
     replacement_scope: exact
+    tests:
+      - input: "regulation of acetylcholine biosynthetic process"
+        output: "regulation of acetylcholine biosynthesis"
+        ontology: GO
   - type: NewSynonym
     branches:
       - environmental_material
@@ -98,6 +122,10 @@ rules:
     match_scope: label|exact
     replacement: "\\1community"
     replacement_scope: exact
+    tests:
+      - input: "subpolar biome"
+        output: "subpolar community"
+        ontology: ENVO
   - type: NewSynonym
     branches:
       - environmental_material
@@ -106,6 +134,10 @@ rules:
     match_scope: label|exact
     replacement: "\\1microbial community"
     replacement_scope: exact
+    tests:
+      - input: "terrestrial biome"
+        output: "terrestrial microbial community"
+        ontology: ENVO
   - type: NewSynonym
     branches:
       - environmental_material
@@ -114,6 +146,10 @@ rules:
     match_scope: label|exact
     replacement: "\\1system"
     replacement_scope: exact
+    tests:
+      - input: "subpolar biome"
+        output: "subpolar system"
+        ontology: ENVO
   - type: NewSynonym
     branches:
       - environmental_material
@@ -122,6 +158,10 @@ rules:
     match_scope: label|exact
     replacement: "\\1microbiome"
     replacement_scope: exact
+    tests:
+      - input: "subpolar biome"
+        output: "subpolar microbiome"
+        ontology: ENVO
   - type: NewSynonym
     branches:
       - environmental_material
@@ -130,6 +170,10 @@ rules:
     match_scope: label|exact
     replacement: "\\1 sample"
     replacement_scope: related
+    tests:
+      - input: "marine hadal zone biome"
+        output: "marine hadal zone biome sample"
+        ontology: ENVO
   - type: NewSynonym
     branches:
       - environmental_material
@@ -137,3 +181,7 @@ rules:
     match: "(.*)(environment|biome)"
     replacement: "\\1ecosystem"
     replacement_scope: related
+    tests:
+      - input: "small freshwater lake biome"
+        output: "small freshwater lake ecosystem"
+        ontology: ENVO

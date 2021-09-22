@@ -67,11 +67,11 @@ slots:
     examples:
     - value: $1 sample
   replacement_scope:
-    required: true
     range: string
     examples:
     - value: related
   tests:
+    required: true
     range: Test
   comments:
     range: string
