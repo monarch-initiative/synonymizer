@@ -26,5 +26,5 @@ setup(
     extras_require=EXTRAS,
     include_package_data=True,
     # add package dependencies
-    install_requires=["click", "pandas", "pytest"],
+    install_requires=["click", "pandas", "pytest", "pyyaml"],
 )
