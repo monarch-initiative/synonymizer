@@ -77,4 +77,6 @@ class TestSynonymizer(unittest.TestCase):
 
         self.assertTrue(actual_output.equals(expected_output))
 
+        # Cleanup: remove generated output.
+
         os.remove(os.path.join(TEST_DATA_FOLDER, "test_syn_termlist.tsv"))
