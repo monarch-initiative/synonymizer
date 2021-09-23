@@ -1,8 +1,8 @@
 prefixes:
-  molecular_function: GO:0003674
-  biological_process: GO:0008150
-  environmental_system: ENVO:01000254
-  environmental_material: ENVO:00010483
+  molecular_function: TEST:0003674
+  biological_process: TEST:0008150
+  environmental_system: TEST:01000254
+  environmental_material: TEST:00010483
 rules:
   - type: NewSynonym
     description: adding X as synonym for X-activity in GO

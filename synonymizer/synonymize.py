@@ -1,20 +1,31 @@
 import pandas as pd
 import yaml
 import os
-
-pwd = os.getcwd()
-synonym_rules = os.path.join(pwd, "rulebook/synonym_rules.yaml")
-data_folder = os.path.join(pwd, "data/")
-syn_schema = os.path.join(pwd, "schema.yaml")
+from . import DATA_FOLDER, SCHEMA, SYNONYM_RULES
 
 
-def main():
-    with open(synonym_rules, "r") as rules, open(
-        syn_schema, "r"
-    ) as schema_file:
+def run(
+    rule_file: str = SYNONYM_RULES,
+    schema_file: str = SCHEMA,
+    data_folder: str = DATA_FOLDER,
+):
+    """Add rules to capture more terms as synonyms during named entity
+    recognition (NER)
+
+    :param rule_file: YAML file that contains the rules.,
+                      defaults to SYNONYM_RULES
+    :type rule_file: str
+    :param schema_file: YAML file that provides schema., defaults to SCHEMA
+    :type schema_file: str
+    :param data_folder: Data folder where the input termlists are located and
+                        the ouput files are saved.,
+                        defaults to DATA_FOLDER
+    :type data_folder: str
+    """
+    with open(rule_file, "r") as rules, open(schema_file, "r") as sf:
         try:
             rule_book = yaml.safe_load(rules)
-            schema = yaml.safe_load(schema_file)
+            schema = yaml.safe_load(sf)
             prefix_cols = ["id", "text"]
             rules_cols = schema["classes"]["Rule"]["slots"]
             prefix_df = pd.DataFrame(columns=prefix_cols)
@@ -29,7 +40,6 @@ def main():
             ]
 
             for key, value in rule_book["prefixes"].items():
-                # key = key.replace("_", " ")
                 row = pd.DataFrame([[value, key]], columns=prefix_cols)
                 prefix_df = pd.concat([prefix_df, row])
 
@@ -86,9 +96,19 @@ def main():
                         right=terms_sub,
                         right_on="text",
                     )
+
                     match_replacement_df = relevant_rules_df[
                         ["match", "replacement"]
-                    ].drop_duplicates()
+                    ]
+
+                    # add rules without 'branches'
+                    match_replacement_df = match_replacement_df.append(
+                        rules_exp_branch_df[
+                            rules_exp_branch_df["branches"] == ""
+                        ][["match", "replacement"]]
+                    )
+
+                    match_replacement_df.drop_duplicates(inplace=True)
 
                     # DEBUG BLOCK *****************************************
                     # match_replacement_df.to_csv(
@@ -104,7 +124,11 @@ def main():
                     #     sep="\t",
                     #     index=None,
                     # )
-                    # **************************************************
+
+                    # import pdb
+
+                    # pdb.set_trace()
+                    # # **************************************************
 
                     for row in match_replacement_df.iterrows():
                         need_syn_df = terms_df[
@@ -112,11 +136,13 @@ def main():
                                 row[1]["match"] + "$"
                             )
                         ]
-                        need_syn_df = need_syn_df[
-                            ~need_syn_df["preferred_term"].str.contains(
-                                "SYNONYM_OF:"
-                            )
-                        ]
+
+                        # This removes all synonyms which are important
+                        # need_syn_df = need_syn_df[
+                        #     ~need_syn_df["preferred_term"].str.contains(
+                        #         "SYNONYM_OF:"
+                        #     )
+                        # ]
 
                         # DEBUG BLOCK *****************************************
                         # need_syn_df.to_csv(
@@ -145,18 +171,19 @@ def main():
                                 regex=True,
                             )
 
-                            syn_row_df["preferred_term"] = (
-                                syn_row_df["match_term"]
-                                + "[SYNONYM_OF:"
-                                + syn_row_df["preferred_term"]
-                                + "]"
-                            )
+                            if not syn_row_df["preferred_term"].str.contains(
+                                "SYNONYM_OF:"
+                            )[0]:
+                                syn_row_df["preferred_term"] = (
+                                    syn_row_df["match_term"]
+                                    + "[SYNONYM_OF:"
+                                    + syn_row_df["preferred_term"]
+                                    + "]"
+                                )
 
                             new_terms_df = pd.concat(
                                 [new_terms_df, syn_row_df]
                             )
-
-                    new_terms_df = new_terms_df.drop_duplicates()
 
                     # DEBUG BLOCK *****************************************
                     # new_terms_df.to_csv(
@@ -168,6 +195,8 @@ def main():
 
                     # Concat with original termlist to form a new one
                     new_terms_df = pd.concat([terms_df, new_terms_df])
+
+                    new_terms_df = new_terms_df.drop_duplicates()
 
                     new_terms_df.to_csv(
                         os.path.join(data_folder, new_terms_filename),
@@ -189,4 +218,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    run()
