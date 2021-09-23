@@ -4,7 +4,7 @@ The main objective of this tool is to apply custom rules for entity recognition 
 
 ## Setups
 
-`pip install -r requirements.txt`
+`python setup.py install`
 
 ## Steps
 
