@@ -1,6 +1,6 @@
 import os
 
 PWD = os.getcwd()
-SYNONYM_RULES = os.path.join(PWD, "rulebook/synonym_rules.yaml")
-DATA_FOLDER = os.path.join(PWD, "tests/data/")
+TEST_SYNONYM_RULES = os.path.join(PWD, "tests/test_rules.yaml")
+TEST_DATA_FOLDER = os.path.join(PWD, "tests/data/")
 SCHEMA = os.path.join(PWD, "schema.yaml")

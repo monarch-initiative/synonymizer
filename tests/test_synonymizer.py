@@ -1,16 +1,15 @@
 import unittest
 import yaml
 import pandas as pd
-from . import SCHEMA, SYNONYM_RULES
+from . import SCHEMA, TEST_SYNONYM_RULES, TEST_DATA_FOLDER
 import re
+import os
+import synonymizer.synonymize as syn
 
 
 class TestSynonymizer(unittest.TestCase):
     def setUp(self) -> None:
-        # self.rule_file: str = SYNONYM_RULES
-        # self.schema_file: str = SCHEMA
-        # self.data_folder: str = DATA_FOLDER
-        with open(SYNONYM_RULES, "r") as rules, open(SCHEMA, "r") as sf:
+        with open(TEST_SYNONYM_RULES, "r") as rules, open(SCHEMA, "r") as sf:
             try:
                 self.rule_book = yaml.safe_load(rules)
                 self.schema = yaml.safe_load(sf)
@@ -62,3 +61,20 @@ class TestSynonymizer(unittest.TestCase):
             )
 
             self.assertEqual(new_concept.strip(), row[1]["tests"]["output"])
+
+    def test_synonymize(self):
+        syn.run(rule_file=TEST_SYNONYM_RULES, data_folder=TEST_DATA_FOLDER)
+        actual_output = pd.read_csv(
+            os.path.join(TEST_DATA_FOLDER, "test_syn_termlist.tsv"),
+            sep="\t",
+            low_memory=False,
+        )
+        expected_output = pd.read_csv(
+            os.path.join(TEST_DATA_FOLDER, "test_output.tsv"),
+            sep="\t",
+            low_memory=False,
+        )
+
+        self.assertTrue(actual_output.equals(expected_output))
+
+        os.remove(os.path.join(TEST_DATA_FOLDER, "test_syn_termlist.tsv"))
