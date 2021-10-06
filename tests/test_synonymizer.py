@@ -41,7 +41,7 @@ class TestSynonymizer(unittest.TestCase):
                 print(exec)
 
     def test_rule_count(self) -> None:
-        self.assertEqual(len(self.rules_df), 18)
+        self.assertEqual(len(self.rules_df), 20)
 
     def test_schema_compliance(self) -> None:
         for key, dic in self.schema["slots"].items():
