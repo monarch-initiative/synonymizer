@@ -1,0 +1,4 @@
+CUI-less	envo.owl	ENVO:04000015	carbon sequestration process	carbon sequestration process	biolink:NamedThing
+CUI-less	envo.owl	ENVO:01001834	subpolar biome	subpolar biome	biolink:NamedThing
+CUI-less	envo.owl	ENVO:01000028	marine hadal zone biome	marine hadal zone biome	biolink:NamedThing
+CUI-less	envo.owl	ENVO:04000015	carbon sequestration	carbon sequestration[SYNONYM_OF:carbon sequestration process]	biolink:NamedThing

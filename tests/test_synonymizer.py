@@ -64,19 +64,25 @@ class TestSynonymizer(unittest.TestCase):
 
     def test_synonymize(self):
         syn.run(rule_file=TEST_SYNONYM_RULES, data_folder=TEST_DATA_FOLDER)
-        actual_output = pd.read_csv(
-            os.path.join(TEST_DATA_FOLDER, "test_syn_termlist.tsv"),
-            sep="\t",
-            low_memory=False,
-        )
-        expected_output = pd.read_csv(
-            os.path.join(TEST_DATA_FOLDER, "test_output.tsv"),
-            sep="\t",
-            low_memory=False,
-        )
+        termlists = {
+            "envo": ["envo_output.tsv", "envo_syn_termlist.tsv"],
+            "go": ["go_output.tsv", "go_syn_termlist.tsv"],
+        }
 
-        self.assertTrue(actual_output.equals(expected_output))
+        for key, val in termlists.items():
+            actual_output = pd.read_csv(
+                os.path.join(TEST_DATA_FOLDER, val[0]),
+                sep="\t",
+                low_memory=False,
+            )
 
-        # Cleanup: remove generated output.
+            expected_output = pd.read_csv(
+                os.path.join(TEST_DATA_FOLDER, val[1]),
+                sep="\t",
+                low_memory=False,
+            )
 
-        os.remove(os.path.join(TEST_DATA_FOLDER, "test_syn_termlist.tsv"))
+            self.assertTrue(actual_output.equals(expected_output))
+
+            # Cleanup: remove generated output.
+            os.remove(os.path.join(TEST_DATA_FOLDER, val[1]))
