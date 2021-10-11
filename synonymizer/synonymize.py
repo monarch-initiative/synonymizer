@@ -85,15 +85,12 @@ def run(
                     )
 
                     pref_sub = prefix_df[prefix_df["id"].str.startswith(ont)]
-                    terms_sub = pd.merge(
-                        left=pref_sub, right=terms_df, on="id"
-                    )
 
                     relevant_rules_df = pd.merge(
                         how="inner",
                         left=rules_exp_branch_df,
                         left_on="branches",
-                        right=terms_sub,
+                        right=pref_sub,
                         right_on="text",
                     )
 
