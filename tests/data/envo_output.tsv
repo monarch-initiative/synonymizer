@@ -1,0 +1,17 @@
+CUI-less	envo.owl	ENVO:04000015	carbon sequestration process	carbon sequestration process	biolink:NamedThing
+CUI-less	envo.owl	ENVO:01001834	subpolar biome	subpolar biome	biolink:NamedThing
+CUI-less	envo.owl	ENVO:01000028	marine hadal zone biome	marine hadal zone biome	biolink:NamedThing
+CUI-less	envo.owl	ENVO:01001834	subpolar community	subpolar community[SYNONYM_OF:subpolar biome]	biolink:NamedThing
+CUI-less	envo.owl	ENVO:01000028	marine hadal zone community	marine hadal zone community[SYNONYM_OF:marine hadal zone biome]	biolink:NamedThing
+CUI-less	envo.owl	ENVO:01001834	subpolar microbial community	subpolar microbial community[SYNONYM_OF:subpolar biome]	biolink:NamedThing
+CUI-less	envo.owl	ENVO:01000028	marine hadal zone microbial community	marine hadal zone microbial community[SYNONYM_OF:marine hadal zone biome]	biolink:NamedThing
+CUI-less	envo.owl	ENVO:01001834	subpolar system	subpolar system[SYNONYM_OF:subpolar biome]	biolink:NamedThing
+CUI-less	envo.owl	ENVO:01000028	marine hadal zone system	marine hadal zone system[SYNONYM_OF:marine hadal zone biome]	biolink:NamedThing
+CUI-less	envo.owl	ENVO:01001834	subpolar microbiome	subpolar microbiome[SYNONYM_OF:subpolar biome]	biolink:NamedThing
+CUI-less	envo.owl	ENVO:01000028	marine hadal zone microbiome	marine hadal zone microbiome[SYNONYM_OF:marine hadal zone biome]	biolink:NamedThing
+CUI-less	envo.owl	ENVO:04000015	carbon sequestration process sample	carbon sequestration process sample[SYNONYM_OF:carbon sequestration process]	biolink:NamedThing
+CUI-less	envo.owl	ENVO:01001834	subpolar biome sample	subpolar biome sample[SYNONYM_OF:subpolar biome]	biolink:NamedThing
+CUI-less	envo.owl	ENVO:01000028	marine hadal zone biome sample	marine hadal zone biome sample[SYNONYM_OF:marine hadal zone biome]	biolink:NamedThing
+CUI-less	envo.owl	ENVO:01001834	subpolar ecosystem	subpolar ecosystem[SYNONYM_OF:subpolar biome]	biolink:NamedThing
+CUI-less	envo.owl	ENVO:01000028	marine hadal zone ecosystem	marine hadal zone ecosystem[SYNONYM_OF:marine hadal zone biome]	biolink:NamedThing
+CUI-less	envo.owl	ENVO:04000015	carbon sequestration	carbon sequestration[SYNONYM_OF:carbon sequestration process]	biolink:NamedThing
