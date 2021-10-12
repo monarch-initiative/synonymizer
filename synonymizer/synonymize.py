@@ -14,13 +14,10 @@ def run(
 
     :param rule_file: YAML file that contains the rules.,
                       defaults to SYNONYM_RULES
-    :type rule_file: str
     :param schema_file: YAML file that provides schema., defaults to SCHEMA
-    :type schema_file: str
     :param data_folder: Data folder where the input termlists are located and
                         the ouput files are saved.,
                         defaults to DATA_FOLDER
-    :type data_folder: str
     """
     with open(rule_file, "r") as rules, open(schema_file, "r") as sf:
         try:
@@ -135,11 +132,11 @@ def run(
                         ]
 
                         # DEBUG BLOCK *****************************************
-                        # need_syn_df.to_csv(
-                        #     os.path.join(data_folder, ont + "_needSyns.tsv"),
-                        #     sep="\t",
-                        #     index=None,
-                        # )
+                        need_syn_df.to_csv(
+                            os.path.join(data_folder, ont + "_needSyns.tsv"),
+                            sep="\t",
+                            index=None,
+                        )
                         # *****************************************************
 
                         for syn_row in need_syn_df.iterrows():
