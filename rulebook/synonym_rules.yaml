@@ -95,7 +95,7 @@ rules:
   - type: NewSynonym
     branches:
       - biological_process
-    match: "(.*)(biosynthetic process)"
+    match: "(.+ )(biosynthetic process)"
     match_scope: "*"
     replacement: "\\1production"
     replacement_scope: exact
