@@ -132,11 +132,11 @@ def run(
                         ]
 
                         # DEBUG BLOCK *****************************************
-                        need_syn_df.to_csv(
-                            os.path.join(data_folder, ont + "_needSyns.tsv"),
-                            sep="\t",
-                            index=None,
-                        )
+                        # need_syn_df.to_csv(
+                        #     os.path.join(data_folder, ont + "_needSyns.tsv"),
+                        #     sep="\t",
+                        #     index=None,
+                        # )
                         # *****************************************************
 
                         for syn_row in need_syn_df.iterrows():
